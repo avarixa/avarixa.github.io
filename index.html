@@ -41,30 +41,31 @@
             }
         }
 
-        function encryptText(text) {
-            const encryptedText = text
+        function encryptText(text, isDecrypt = false) {
+            const shift = 3; // Adjust the shift as needed
+            const modifier = isDecrypt ? -shift : shift; // Reverse the shift for decryption
+            const result = text
                 .split('')
                 .map(char => {
                     if (char === '\n') {
                         return '\n'; // Preserve newline characters
                     } else if (char.match(/[a-z]/i)) {
                         const code = char.charCodeAt(0);
-                        const shift = 3; // Adjust the shift as needed
                         const isUpperCase = (code >= 65 && code <= 90);
                         const isLowerCase = (code >= 97 && code <= 122);
-                        
+
                         if (isUpperCase || isLowerCase) {
                             const base = isUpperCase ? 65 : 97;
-                            const encryptedCode = (code - base + shift) % 26 + base;
-                            return String.fromCharCode(encryptedCode);
+                            const shiftedCode = (code - base + modifier + 26) % 26 + base;
+                            return String.fromCharCode(shiftedCode);
                         }
                     }
                     return char; // Preserve other characters
                 })
                 .join('');
-            
-            return encryptedText;
-        }
+
+            return result;
+}
 
         async function lookupPassword() {
             const password = document.getElementById("password").value;
@@ -73,7 +74,7 @@
 
             if (dictionary[password]) {
                 const result = dictionary[password];
-                const encryptedResult = encryptText(result, encryptionKey);
+                const encryptedResult = encryptText(result);
                 outputElement.textContent = "Encrypted Result:\n" + encryptedResult;
             } else {
                 outputElement.textContent = "Password not found in the dictionary.";
