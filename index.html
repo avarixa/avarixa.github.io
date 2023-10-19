@@ -62,7 +62,7 @@
                 .split('')
                 .map(char => {
                     if (char === '\n') {
-                        return '\n'; // Preserve newline characters
+                        return '\n\n'; // Preserve newline characters
                     }
                     else if (char.match(/[a-z]/i)) {
                         const code = char.charCodeAt(0);
