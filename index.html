@@ -1,24 +1,59 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Password Reversal</title>
+    <title>Password Lookup</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        form {
+            text-align: center;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
     <form>
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required><br><br>
         
-        <input type="button" value="Reverse Password" onclick="reversePassword()">
+        <input type="button" value="Lookup Password" onclick="lookupPassword()">
     </form>
 
     <p id="output"></p>
 
     <script>
-        function reversePassword() {
-            var password = document.getElementById("password").value;
-            var reversedPassword = password.split('').reverse().join('');
-            document.getElementById("output").textContent = "Reversed Password: " + reversedPassword;
+        async function fetchDictionary() {
+            try {
+                const response = await fetch('passwords.json'); // Update with your file path
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error('Error fetching dictionary:', error);
+                return {};
+            }
         }
+
+        async function lookupPassword() {
+            const password = document.getElementById("password").value;
+            const dictionary = await fetchDictionary();
+
+            const result = dictionary[password];
+            if (result) {
+                document.getElementById("output").textContent = result;
+            } else {
+                document.getElementById("output").textContent = "Password not found in the dictionary.";
+            }
+        }
+
+        // Initialize by fetching the dictionary
+        fetchDictionary();
     </script>
 </body>
 </html>
