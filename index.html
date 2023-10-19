@@ -66,18 +66,21 @@
             return encryptedText;
         }
 
-        function lookupPassword() {
+        async function lookupPassword() {
             const password = document.getElementById("password").value;
-            const result = dictionary[password];
+            const dictionary = await fetchDictionary();
             const outputElement = document.getElementById("output");
 
-            if (result) {
-                const encryptedResult = encryptText(result);
+            if (dictionary[password]) {
+                const result = dictionary[password];
+                const encryptedResult = encryptText(result, encryptionKey);
                 outputElement.textContent = "Encrypted Result:\n" + encryptedResult;
             } else {
                 outputElement.textContent = "Password not found in the dictionary.";
             }
         }
+        // Initialize by fetching the dictionary
+        fetchDictionary();
     </script>
 </body>
 </html>
