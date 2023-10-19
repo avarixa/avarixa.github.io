@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Password Lookup</title>
+    <title>Password Lookup with Encryption</title>
     <style>
         body {
             display: flex;
@@ -29,15 +29,31 @@
     <p id="output"></p>
 
     <script>
+        const dictionary = {
+            "password1": "Result 1",
+            "password2": "Result 2",
+            // Add more entries here
+        };
+
+        const encryptionKey = {
+            'a': 'x', 'b': 'y', 'c': 'z', 'd': 'a', 'e': 'b', 'f': 'c',
+            'g': 'd', 'h': 'e', 'i': 'f', 'j': 'g', 'k': 'h', 'l': 'i',
+            'm': 'j', 'n': 'k', 'o': 'l', 'p': 'm', 'q': 'n', 'r': 'o',
+            's': 'p', 't': 'q', 'u': 'r', 'v': 's', 'w': 't', 'x': 'u',
+            'y': 'v', 'z': 'w',
+        };
+
+        function encryptText(text) {
+            return text.split('').map(char => encryptionKey[char] || char).join('');
+        }
+
         function lookupPassword() {
-            var password = document.getElementById("password").value;
-            var dictionary = {
-                "your_password_here": "Your password is in the dictionary!",
-                // Add more password entries here
-            };
-            var result = dictionary[password];
+            const password = document.getElementById("password").value;
+            const result = dictionary[password];
+
             if (result) {
-                document.getElementById("output").textContent = result;
+                const encryptedResult = encryptText(result);
+                document.getElementById("output").textContent = "Encrypted Result: " + encryptedResult;
             } else {
                 document.getElementById("output").textContent = "Password not found in the dictionary.";
             }
