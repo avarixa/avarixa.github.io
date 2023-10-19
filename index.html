@@ -29,11 +29,37 @@
     <p id="output"></p>
 
     <script>
-        const dictionary = {
-            "1": " - good and simple headline\n- lead construction needs improvement. try to go for straight lead (magsimula sa kung sino nanalo, sino tinalo, score, anong tournament, kailan at saan ginanap)\n-work on grammar especially subject-verb agreement and proper sentence construction\n-work on angles, (refer to my lecture about establishing the angle in the first three paragraphs)",
-            "password2": "Result 2",
-            // Add more entries here
-        };
+        async function fetchDictionary() {
+            try {
+                const response = await fetch('passwords.json'); // Update with your file path
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error('Error fetching dictionary:', error);
+                return {};
+            }
+        }
+
+        function encryptText(text, encryptionKey) {
+            return text
+                .split('')
+                .map(char => (char in encryptionKey ? encryptionKey[char] : char))
+                .join('');
+        }
+
+        async function lookupPassword() {
+            const password = document.getElementById("password").value;
+            const dictionary = await fetchDictionary();
+            const outputElement = document.getElementById("output");
+
+            if (dictionary[password]) {
+                const result = dictionary[password];
+                const encryptedResult = encryptText(result, encryptionKey);
+                outputElement.textContent = "Encrypted Result:\n" + encryptedResult;
+            } else {
+                outputElement.textContent = "Password not found in the dictionary.";
+            }
+        }
 
         const encryptionKey = {
             'a': 'x', 'b': 'y', 'c': 'z', 'd': 'a', 'e': 'b', 'f': 'c',
@@ -43,21 +69,8 @@
             'y': 'v', 'z': 'w',
         };
 
-        function encryptText(text) {
-            return text.split('').map(char => encryptionKey[char] || char).join('');
-        }
-
-        function lookupPassword() {
-            const password = document.getElementById("password").value;
-            const result = dictionary[password];
-
-            if (result) {
-                const encryptedResult = encryptText(result);
-                document.getElementById("output").textContent = "Encrypted Result: " + encryptedResult;
-            } else {
-                document.getElementById("output").textContent = "Password not found in the dictionary.";
-            }
-        }
+        // Initialize by fetching the dictionary
+        fetchDictionary();
     </script>
 </body>
 </html>
