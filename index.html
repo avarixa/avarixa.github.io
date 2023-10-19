@@ -1,32 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login Page</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        form {
-            text-align: center;
-            border: 1px solid #ccc;
-            padding: 20px;
-            border-radius: 5px;
-        }
-    </style>
+    <title>Password Reversal</title>
 </head>
 <body>
     <form>
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br><br>
-        
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required><br><br>
         
-        <input type="submit" value="Login">
+        <input type="button" value="Reverse Password" onclick="reversePassword()">
     </form>
+
+    <p id="output"></p>
+
+    <script>
+        function reversePassword() {
+            var password = document.getElementById("password").value;
+            var reversedPassword = password.split('').reverse().join('');
+            document.getElementById("output").textContent = "Reversed Password: " + reversedPassword;
+        }
+    </script>
 </body>
 </html>
