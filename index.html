@@ -37,7 +37,7 @@
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required><br><br>
         
-        <input type="button" value="Lookup Password" onclick="lookupPassword()">
+        <input type="button" value="See Feedback" onclick="lookupPassword()">
     </form>
 
 
@@ -94,13 +94,15 @@
         }
         // Initialize by fetching the dictionary
         fetchDictionary();
-        
-        // Capture the "Enter" key press and trigger the button click
-        document.getElementById("password").addEventListener("keyup", function(event) {
+
+        // Prevent form submission on Enter key press
+        document.getElementById("password").addEventListener("keydown", function(event) {
             if (event.key === "Enter") {
-                lookupPassword();
+                event.preventDefault(); // Prevent the default form submission
+                lookupPassword(); // Trigger the "Lookup Password" function
             }
         });
+    </script>
     </script>
 </body>
 </html>
