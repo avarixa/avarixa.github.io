@@ -29,31 +29,19 @@
     <p id="output"></p>
 
     <script>
-        async function fetchDictionary() {
-            try {
-                const response = await fetch('passwords.json'); // Update with your file path
-                const data = await response.json();
-                return data;
-            } catch (error) {
-                console.error('Error fetching dictionary:', error);
-                return {};
-            }
-        }
-
-        async function lookupPassword() {
-            const password = document.getElementById("password").value;
-            const dictionary = await fetchDictionary();
-
-            const result = dictionary[password];
+        function lookupPassword() {
+            var password = document.getElementById("password").value;
+            var dictionary = {
+                "your_password_here": "Your password is in the dictionary!",
+                // Add more password entries here
+            };
+            var result = dictionary[password];
             if (result) {
                 document.getElementById("output").textContent = result;
             } else {
                 document.getElementById("output").textContent = "Password not found in the dictionary.";
             }
         }
-
-        // Initialize by fetching the dictionary
-        fetchDictionary();
     </script>
 </body>
 </html>
