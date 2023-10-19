@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>M5 Journalism Workshop</title>
+    <title>M5 Journalism Workshop Lecturer Feedback</title>
     <style>
         body {
             font-family: "Helvetica", Arial, sans-serif;
@@ -62,7 +62,7 @@
                 .split('')
                 .map(char => {
                     if (char === '\n') {
-                        return '\n\n'; // Preserve newline characters
+                        return '\n'; // Preserve newline characters
                     }
                     else if (char.match(/[a-z]/i)) {
                         const code = char.charCodeAt(0);
