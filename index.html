@@ -32,7 +32,7 @@
     <script>
         async function fetchDictionary() {
             try {
-                const response = await fetch('passwords.json'); // Update with your file path
+                const response = await fetch('encrypted_passwords.json'); // Update with your file path
                 const data = await response.json();
                 return data;
             } catch (error) {
@@ -71,7 +71,7 @@
 
             if (dictionary[password]) {
                 const result = dictionary[password];
-                const encryptedResult = encryptText(result);
+                const encryptedResult = encryptText(result, true);
                 outputElement.textContent = "Encrypted Result:\n" + encryptedResult;
             } else {
                 outputElement.textContent = "Password not found in the dictionary.";
