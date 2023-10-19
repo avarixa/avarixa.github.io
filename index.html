@@ -53,19 +53,16 @@
                         const code = char.charCodeAt(0);
                         const isUpperCase = (code >= 65 && code <= 90);
                         const isLowerCase = (code >= 97 && code <= 122);
-
-                        if (isUpperCase || isLowerCase) {
-                            const base = isUpperCase ? 65 : 97;
-                            const shiftedCode = (code - base + modifier + 26) % 26 + base;
-                            return String.fromCharCode(shiftedCode);
-                        }
+                        const base = isUpperCase ? 65 : 97;
+                        const shiftedCode = (code - base + modifier + 26) % 26 + base;
+                        return String.fromCharCode(shiftedCode);
                     }
                     return char; // Preserve other characters
                 })
                 .join('');
 
             return result;
-}
+        }
 
         async function lookupPassword() {
             const password = document.getElementById("password").value;
